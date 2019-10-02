@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>3d Chart</title>
+</head>
+<script>
+    // Polyfill for requestAnimationFrame and cancelAnimationFrame.
+    if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = (
+            window.requestAnimationFrame
+            || window.webkitRequestAnimationFrame
+            || window.mozRequestAnimationFrame
+            || window.oRequestAnimationFrame
+            || window.msRequestAnimationFrame
+            || function (cb) {
+                window.setTimeout(cb, 1000 / 60);
+            }
+        )
+    }
+    if (!window.cancelAnimationFrame) {
+        window.cancelAnimationFrame = (
+            window.cancelRequestAnimationFrame
+            || window.webkitCancelAnimationFrame
+            || window.webkitCancelRequestAnimationFrame
+            || window.mozCancelAnimationFrame
+            || window.mozCancelRequestAnimationFrame
+            || window.msCancelAnimationFrame
+            || window.msCancelRequestAnimationFrame
+            || window.oCancelAnimationFrame
+            || window.oCancelRequestAnimationFrame
+            || window.clearTimeout
+        );
+    }
+</script>
+
+<body>
+<canvas id="webgl" width="400" height="400">
+    Please use a browser that supports "canvas"
+</canvas>
+<script src="src/scripts/index.js"></script>
+</body>
+</html>

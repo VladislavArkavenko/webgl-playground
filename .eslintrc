@@ -1,0 +1,13 @@
+{
+  "extends": [ "airbnb-base", "prettier" ],
+  "globals": {
+    "window": "writable",
+    "document": "writable",
+    "localStorage": "writable"
+  },
+  "plugins": ["prettier"],
+  "parser": "babel-eslint",
+  "rules": {
+    "prettier/prettier": ["error"]
+  }
+}
