@@ -3,7 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const ENTRY_PATH = path.resolve(__dirname, 'src/scripts/index.js');
+const ENTRY_PATH = path.resolve(__dirname, 'src/scripts/main.js');
 const BUILD_PATH = path.resolve(__dirname, 'public');
 const SHADER_PATH = path.resolve(__dirname, 'src/shaders');
 

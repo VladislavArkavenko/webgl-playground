@@ -2,8 +2,8 @@
 precision mediump float;
 #endif
 
-#pragma glslify: packDepth = require('./helpers/packDepth')
+#pragma glslify: floatToVec4 = require('./helpers/floatToVec4')
 
 void main() {
-    gl_FragColor = packDepth(gl_FragCoord.z);
+    gl_FragColor = floatToVec4(gl_FragCoord.z);
 }
