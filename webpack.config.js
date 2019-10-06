@@ -3,7 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const ENTRY_PATH = path.resolve(__dirname, 'src/scripts/main.js');
+const ENTRY_PATH = path.resolve(__dirname, 'src/scripts/index.js');
 const BUILD_PATH = path.resolve(__dirname, 'public');
 const SHADER_PATH = path.resolve(__dirname, 'src/shaders');
 
@@ -31,7 +31,7 @@ const config = {
         ]
       },
       {
-        test: /\.(frag|vert|glsl)$/,
+        test: /\.glsl$/,
         exclude: /node_modules/,
         include: SHADER_PATH,
         use: ['raw-loader', 'glslify-loader']

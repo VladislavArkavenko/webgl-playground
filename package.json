@@ -20,7 +20,7 @@
       "transform-object-rest-spread"
     ]
   },
-  "husky": {
+  "_husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
