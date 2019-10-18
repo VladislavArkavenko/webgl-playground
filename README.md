@@ -1,4 +1,4 @@
-#To start project run static server in root dir.
+# To start project run static server in root dir.
 
 1. npm i -g http-server
 2. cd playground
