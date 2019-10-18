@@ -2,62 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>3d Chart</title>
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-        }
-
-        body {
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        canvas {
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-    </style>
+    <title>WebGL Playground</title>
 </head>
-<script>
-    // Polyfill for requestAnimationFrame and cancelAnimationFrame.
-    if (!window.requestAnimationFrame) {
-        window.requestAnimationFrame = (
-            window.requestAnimationFrame
-            || window.webkitRequestAnimationFrame
-            || window.mozRequestAnimationFrame
-            || window.oRequestAnimationFrame
-            || window.msRequestAnimationFrame
-            || function (cb) {
-                window.setTimeout(cb, 1000 / 60);
-            }
-        )
-    }
-    if (!window.cancelAnimationFrame) {
-        window.cancelAnimationFrame = (
-            window.cancelRequestAnimationFrame
-            || window.webkitCancelAnimationFrame
-            || window.webkitCancelRequestAnimationFrame
-            || window.mozCancelAnimationFrame
-            || window.mozCancelRequestAnimationFrame
-            || window.msCancelAnimationFrame
-            || window.msCancelRequestAnimationFrame
-            || window.oCancelAnimationFrame
-            || window.oCancelRequestAnimationFrame
-            || window.clearTimeout
-        );
-    }
-</script>
 
-<body oncontextmenu="return false;">
-<canvas id="webgl">
+<body>
+<canvas id="webgl" width="800" height="800">
     Please use a browser that supports "canvas"
 </canvas>
-<canvas id="hud">
-    Please use a browser that supports "canvas"
-</canvas>
+
+<script src="lib/webgl-utils.js"></script>
+<script src="lib/webgl-debug.js"></script>
+<script src="lib/cuon-utils.js"></script>
+<script src="lib/cuon-matrix.js"></script>
+<script src="curves.js"></script>
 </body>
 </html>

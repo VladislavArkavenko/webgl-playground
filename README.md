@@ -1,10 +1,3 @@
-# Development:
-
-#### To start project:
-npm start 
-
-# Production:
-
-#### To start project:
+To start project open index.html in your browser.
 
 
