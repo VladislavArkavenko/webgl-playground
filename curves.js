@@ -39,8 +39,8 @@ function main() {
     }
 
     (function tick() {
-        // const arr = animatedBezierCurve(vert);
-        const arr = animatedBSpline();
+        // const arr = animatedBSpline();
+        const arr = animatedBezierCurve(vert);
 
         gl.clear(gl.COLOR_BUFFER_BIT);
         gl.clearColor(0, 0, 0, 1);
@@ -167,71 +167,71 @@ function animatedBSpline(n = 30, frequency = 500, length = 5) {
     return newArr;
 }
 
-// // BEZIER CURVES
-// const lut = [
-//     [1],
-//     [1, 1],
-//     [1, 2, 1],
-//     [1, 3, 3, 1],
-//     [1, 4, 6, 4, 1],
-//     [1, 5, 10, 10, 5, 1],
-//     [1, 6, 15, 20, 15, 6, 1]
-// ];
-//
-// function binomial(n, k) {
-//     // If we do not have enough data in lut.
-//     while (n >= lut.length) {
-//         const l = lut.length;
-//         const prev = l - 1;
-//
-//         const nextRow = [];
-//         nextRow[0] = 1;
-//         nextRow[l] = 1;
-//         for (let i = 1; i < l; i++) {
-//             nextRow[i] = lut[prev][i - 1] + lut[prev][i];
-//         }
-//         lut.add(nextRow)
-//     }
-//
-//     return lut[n][k];
-// }
-//
-// function bezier(n, t, w) {
-//     // n - type of curve (2 -quadratic, 3 - cubic, etc.)
-//     // t - {0, 1} percent of path
-//     // w - control points (wight)
-//     let sum = 0;
-//     for (let k = 0; k <= n; k++) {
-//         sum += w[k] * binomial(n, k) * ((1 - t) ** (n - k)) * (t ** k)
-//     }
-//
-//     return sum
-// }
-//
-// function createBezierCurve(vert, n = 20) {
-//     const arr = [];
-//     const step = Math.floor(100 / n) / 100;
-//     const vertX = vert.filter((a, i) => i % 2 === 0);
-//     const vertY = vert.filter((a, i) => i % 2 !== 0);
-//
-//     for (let t = 0; t <= 1; t = Math.floor((t + step) * 100) / 100) {
-//         const x = bezier(2, t, vertX);
-//         const y = bezier(2, t, vertY);
-//
-//         arr.push(x, y);
-//     }
-//
-//     return arr;
-// }
-//
-// // ANIMATION
+// BEZIER CURVES
+const lut = [
+    [1],
+    [1, 1],
+    [1, 2, 1],
+    [1, 3, 3, 1],
+    [1, 4, 6, 4, 1],
+    [1, 5, 10, 10, 5, 1],
+    [1, 6, 15, 20, 15, 6, 1]
+];
+
+function binomial(n, k) {
+    // If we do not have enough data in lut.
+    while (n >= lut.length) {
+        const l = lut.length;
+        const prev = l - 1;
+
+        const nextRow = [];
+        nextRow[0] = 1;
+        nextRow[l] = 1;
+        for (let i = 1; i < l; i++) {
+            nextRow[i] = lut[prev][i - 1] + lut[prev][i];
+        }
+        lut.add(nextRow)
+    }
+
+    return lut[n][k];
+}
+
+function bezier(n, t, w) {
+    // n - type of curve (2 -quadratic, 3 - cubic, etc.)
+    // t - {0, 1} percent of path
+    // w - control points (wight)
+    let sum = 0;
+    for (let k = 0; k <= n; k++) {
+        sum += w[k] * binomial(n, k) * ((1 - t) ** (n - k)) * (t ** k)
+    }
+
+    return sum
+}
+
+function createBezierCurve(vert, n = 20) {
+    const arr = [];
+    const step = Math.floor(100 / n) / 100;
+    const vertX = vert.filter((a, i) => i % 2 === 0);
+    const vertY = vert.filter((a, i) => i % 2 !== 0);
+
+    for (let t = 0; t <= 1; t = Math.floor((t + step) * 100) / 100) {
+        const x = bezier(2, t, vertX);
+        const y = bezier(2, t, vertY);
+
+        arr.push(x, y);
+    }
+
+    return arr;
+}
+
+// ANIMATION
 // let lastUpdate = Date.now();
-// function animatedBezierCurve(vert, n = 30, duration = 1000) {
-//     const now = Date.now();
-//     const arr = createBezierCurve(vert, n); // There is no need to make this every render.
-//
-//     const step = duration / n;
-//     const endIndex = Math.floor((now - lastUpdate) / step);
-//
-//     return arr.slice(0, endIndex);
-// }
+function animatedBezierCurve(vert, n = 30, duration = 1000) {
+    const now = Date.now();
+    const arr = createBezierCurve(vert, n); // There is no need to make this every render.
+
+    const step = duration / n;
+    const endIndex = Math.floor((now - lastUpdate) / step);
+
+    return arr.slice(0, endIndex);
+}
