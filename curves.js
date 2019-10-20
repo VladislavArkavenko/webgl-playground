@@ -38,12 +38,13 @@ function main() {
         return;
     }
 
+    gl.clearColor(0, 0, 0, 1);
+
     (function tick() {
-        // const arr = animatedBSpline();
-        const arr = animatedBezierCurve(vert);
+        const arr = animatedBSpline();
+        // const arr = animatedBezierCurve(vert);
 
         gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.clearColor(0, 0, 0, 1);
 
         // Draw curve
         const curve_n = initVertexBuffers(gl, arr);
@@ -54,12 +55,12 @@ function main() {
         gl.drawArrays(gl.LINE_STRIP, 0, curve_n);
 
         // Draw points
-        const dots_n = initVertexBuffers(gl, vert);
-        if (dots_n < 0) {
-            console.log('Failed to set the positions of the vertices for points');
-            return;
-        }
-        gl.drawArrays(gl.POINTS, 0, dots_n);
+        // const dots_n = initVertexBuffers(gl, vert);
+        // if (dots_n < 0) {
+        //     console.log('Failed to set the positions of the vertices for points');
+        //     return;
+        // }
+        // gl.drawArrays(gl.POINTS, 0, dots_n);
 
         window.requestAnimationFrame(tick)
     }());
@@ -190,7 +191,7 @@ function binomial(n, k) {
         for (let i = 1; i < l; i++) {
             nextRow[i] = lut[prev][i - 1] + lut[prev][i];
         }
-        lut.add(nextRow)
+        lut.push(nextRow)
     }
 
     return lut[n][k];
@@ -208,15 +209,17 @@ function bezier(n, t, w) {
     return sum
 }
 
-function createBezierCurve(vert, n = 20) {
+function createBezierCurve(vert, n = 2, l = 30) {
+    // n - type of curve (2 -quadratic, 3 - cubic, etc.)
+    // l - amount of line parts
     const arr = [];
-    const step = Math.floor(100 / n) / 100;
+    const step = Math.floor(100 / l) / 100;
     const vertX = vert.filter((a, i) => i % 2 === 0);
     const vertY = vert.filter((a, i) => i % 2 !== 0);
 
     for (let t = 0; t <= 1; t = Math.floor((t + step) * 100) / 100) {
-        const x = bezier(2, t, vertX);
-        const y = bezier(2, t, vertY);
+        const x = bezier(n, t, vertX);
+        const y = bezier(n, t, vertY);
 
         arr.push(x, y);
     }
@@ -225,12 +228,18 @@ function createBezierCurve(vert, n = 20) {
 }
 
 // ANIMATION
+// let arr = undefined;
 // let lastUpdate = Date.now();
-function animatedBezierCurve(vert, n = 30, duration = 1000) {
-    const now = Date.now();
-    const arr = createBezierCurve(vert, n); // There is no need to make this every render.
+let prevVert = undefined;
 
-    const step = duration / n;
+function animatedBezierCurve(vert, n = 2, l = 50, duration = 1000) {
+    const now = Date.now();
+    if (prevVert !== vert) {
+        prevVert = vert;
+        arr = createBezierCurve(vert, n, l);
+    }
+
+    const step = duration / l;
     const endIndex = Math.floor((now - lastUpdate) / step);
 
     return arr.slice(0, endIndex);
