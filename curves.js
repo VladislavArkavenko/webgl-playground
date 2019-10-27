@@ -231,7 +231,6 @@ function createBezierCurve(vert, n = 2, l = 30) {
 // let arr = undefined;
 // let lastUpdate = Date.now();
 let prevVert = undefined;
-
 function animatedBezierCurve(vert, n = 2, l = 50, duration = 1000) {
     const now = Date.now();
     if (prevVert !== vert) {

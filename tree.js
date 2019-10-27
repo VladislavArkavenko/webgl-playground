@@ -105,7 +105,7 @@ function rotatePoint(angle, point, rotatePoint = [0, 0]) {
     return [x * c - y * s + rotatePoint[0], x * s + y * c + rotatePoint[1]];
 }
 
-function createTree(vert, n = 5, a = 30, amp = 0, sfs = [0.25, 0.75], lf = 1) {
+function createTree(vert, n = 4, a = 30, amp = 0, sfs = [0.33, 0.75, 0.85], lf = 0.75) {
     // n - recursion deepness
     // a - rotate angle for left and right subtrees
     // amp - amplitude angle for randomizing default angel
@@ -127,17 +127,12 @@ function createTree(vert, n = 5, a = 30, amp = 0, sfs = [0.25, 0.75], lf = 1) {
         const startY = prevLineY[0] + sf * lengthY;
         const startPoint = [startX, startY];
 
-        const endX = prevLineX[0] + lf * lengthX;
-        const endY = prevLineY[0] + lf * lengthY;
+        const endX = startX + lf * (prevLineX[1] - startX);
+        const endY = startY + lf * (prevLineY[1] - startY);
         let endPoint = [endX, endY];
 
-        const endPoints = [
-            rotatePoint(randomize(a, amp), endPoint, startPoint),
-            rotatePoint(randomize(-a, amp), endPoint, startPoint)
-        ];
-
-        const leftLine = [...startPoint, ...endPoints[0]];
-        const rightLine = [...startPoint, ...endPoints[1]];
+        const leftLine = [...startPoint, ...rotatePoint(randomize(a, amp), endPoint, startPoint)];
+        const rightLine = [...startPoint, ...rotatePoint(randomize(-a, amp), endPoint, startPoint)];
 
         const leftTree = createTree(leftLine, n - 1, a, amp, sfs, lf);
         const rightTree = createTree(rightLine, n - 1, a, amp, sfs, lf);
